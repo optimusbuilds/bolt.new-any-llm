@@ -1,14 +1,14 @@
 {
-  "name": "bolt",
-  "description": "An AI Agent",
+  "name": "blocpod",
+  "description": "AI-Powered Full-Stack Development Platform by Blocpod",
   "private": true,
   "license": "MIT",
   "sideEffects": false,
   "type": "module",
   "version": "1.0.0",
   "author": {
-    "name": "bolt.diy team",
-    "email": "maintainers@bolt.diy"
+    "name": "Blocpod Team",
+    "email": "dev@blocpod.com"
   },
   "scripts": {
     "deploy": "npm run build && wrangler pages deploy",
