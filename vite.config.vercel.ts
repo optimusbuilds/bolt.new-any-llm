@@ -1,4 +1,5 @@
 import { vitePlugin as remixVitePlugin } from '@remix-run/dev';
+import { vercelPreset } from '@vercel/remix/vite';
 import UnoCSS from 'unocss/vite';
 import { defineConfig, type ViteDevServer } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
@@ -21,14 +22,14 @@ export default defineConfig((config) => {
     },
     plugins: [
       nodePolyfills({
-        include: ['buffer', 'process', 'util', 'stream'],
+        include: ['buffer', 'process', 'stream'],
         globals: {
           Buffer: true,
           process: true,
           global: true,
         },
         protocolImports: true,
-        exclude: ['child_process', 'fs', 'path'],
+        exclude: ['child_process', 'fs', 'path', 'util'],
       }),
       {
         name: 'buffer-polyfill',
@@ -44,6 +45,7 @@ export default defineConfig((config) => {
         },
       },
       remixVitePlugin({
+        presets: [vercelPreset()],
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
@@ -71,16 +73,6 @@ export default defineConfig((config) => {
         },
       },
     },
-    test: {
-      exclude: [
-        '**/node_modules/**',
-        '**/dist/**',
-        '**/cypress/**',
-        '**/.{idea,git,cache,output,temp}/**',
-        '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
-        '**/tests/preview/**', // Exclude preview tests that require Playwright
-      ],
-    },
   };
 });
 
@@ -97,7 +89,7 @@ function chrome129IssuePlugin() {
           if (version === 129) {
             res.setHeader('content-type', 'text/html');
             res.end(
-              '<body><h1>Please use Chrome Canary for testing.</h1><p>Chrome 129 has an issue with JavaScript modules & Vite local development, see <a href="https://github.com/stackblitz/Blocpod/issues/86#issuecomment-2395519258">for more information.</a></p><p><b>Note:</b> This only impacts <u>local development</u>. `pnpm run build` and `pnpm run start` will work fine in this browser.</p></body>',
+              '<body><h1>Please use Chrome Canary for testing.</h1><p>Chrome 129 has an issue with JavaScript modules & Vite local development, see <a href="https://github.com/nicepkg/gpt-runner/issues/1">for more information.</a></p></body>',
             );
 
             return;
